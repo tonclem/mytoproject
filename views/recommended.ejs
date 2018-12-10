@@ -1,0 +1,38 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+
+
+<h1 style= "color: darkgreen; font-size:18xp;"> Welcome To Torama Tech </h1>
+
+<p><%= videoTitle %></p>
+
+
+<p > Recommended for you </p>
+
+<video id="rec-video" style="max-width:100%;height:auto;" controls src="<%= recommended  %>" 
+    type="video/mp4"> 
+</video>
+
+<p> <%= recommended%></p>
+
+<p style="font-size:12px;color:black;font-style:normal"> All Videos - watch now</p>
+
+<% for (k=0;k<videoFiles.length;k=k+4) { %>
+
+    <div id="rec-body" class="row">
+        <% for (i=k; i<k+4; i++) { %>
+            <% if (videoFiles[i]) {el = videoFiles[i]; %>
+                <div class="col">
+                    
+                    <video style="max-height:50%;max-width:107%;height:200px;" controls src="<%= el %>" 
+                        type="video/mp4"> 
+                    </video>
+                    <p> <%= ((decodeURI(el).slice(0,-4)).substr(0,28)) %></p>
+                </div>
+            <% }%>
+        <%}%>
+    </div>
+<% } %>
+
+
+<%- include('footer'); -%>
