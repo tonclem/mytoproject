@@ -36,21 +36,30 @@ var upload = multer({storage:storage});
 /*
 Listening for post request on http://localhost:3000/uploadFile
 */
-router.post('/',function(req,res,next){
+router.post('/',function(req,res){
+    if (req.files) {
 
-    let videoFile = req.files.filetoupload;
+      var file = req.files.filename;
+      var filename = file.name;
+      console.log(filename);
     
-    videoFile.mv(`./videos/java/${req.files.fileUpload.name}`,function(error){
-        if(error) {
-            return res.send(500,error);
-        }
-        else{
-            res.json({file:`./videos/java/${req.files.fileUpload.name}`});
-        }
-    } );
+    }
+    else{
+        console.log('Not a file');
+    }
+
+    // let videoFile = req.files.filetoupload;
     
+    // videoFile.mv(`./videos/java/${req.files.fileUpload.name}`,function(error){
+    //     if(error) {
+    //         return res.send(500,error);
+    //     }
+    //     else{
+    //         res.json({file:`./videos/java/${req.files.fileUpload.name}`});
+    //     }
+    // } );
     
-//     fs.appendFile(`./videos/java/${req.file}`,req.file, function(error){
+       
 //     if(error) throw error;
 //         response.send(200,'<h1 style="color:green"> File Uploaded </>');
 //         console.log(req.file);

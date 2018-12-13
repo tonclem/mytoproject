@@ -32,14 +32,15 @@ router.post('/',(req,res) =>{
   var foundVideos =[];
 
   const schema = {
-  input_text: Joi.string().min(0).required()
+  input_text: Joi.string().min(1).required()
 };
   const text = req.body.input_text;
 
   Joi.validate({input_text:text},schema ,function(error, value){
 
     if(error){
-      res.status(404).send(result.error).header('Content-Type:application/json');
+      res.writeHead('Content-type:application/json');
+      res.status(404).send(result.error);
       return;
     }else{
 
@@ -52,9 +53,17 @@ router.post('/',(req,res) =>{
       });
 
       if(foundVideos.length === 0){
-          res.send(404, "<h3 style = 'color:black;font-size:12xp;font-style:Verdana;margin:10px 10px 20px 10px'>  No Video Found that matches the name "
-           +value.input_text + "</h3>" +"<button class='btn btn-outline-success my-2 my-sm-0' action='http://localhost:3000/randomVideos> Go back </button>"  );
+          // res.send(404, "<h3 style = 'color:black;font-size:12xp;font-style:Verdana;margin:10px 10px 20px 10px'>  No Video Found that matches the name "
+          //  +value.input_text + "</h3>" +"<button class='btn btn-outline-success my-2 my-sm-0' action='http://localhost:3000/randomVideos> Go back </button>"  );
         
+
+          res.render('notFoundView', { 
+            title: 'All Videos containing '+ value.input_text ,
+            videoFiles: searchSync,
+            videoDir: 'Video Search'
+        
+          });
+
       }else{
       res.render('searchView', { 
         videoTitle: 'All Videos containing '+value.input_text ,

@@ -1,0 +1,22 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+<h1><%= videoTitle %></h1>
+
+<p> # of Videos <%= videoFiles.length %> </p>
+    <div class="row" id="video-row">
+       
+            <% videoFiles.forEach(function (file) { %>
+
+            
+                <div class="col" id="video-div-col" >  
+                    
+                    <video id="video-vid" controls src="<%= file %>" 
+                        type="video/mp4"> 
+                    </video>
+                    <p> <%= ((decodeURI(file).slice(0,-4)).substr(0,28)) %></p>
+                </div>
+            <% })%>
+    
+    </div>
+
+<%- include('footer'); -%>

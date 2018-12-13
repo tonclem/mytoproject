@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/stylesheets/style2.css">
+</head>
+<body>
+
+    <div class = "grid">
+            <div class = "title"> <%= title%></div>
+            <div class = "Header"> Header</div>
+            <div class = "sidebar"> Sidebar</div>
+            <div class = "content"> 
+
+                <p> # of Videos <%= videoFiles.length %> </p>
+<% for (k=0;k<videoFiles.length;k=k+4) { %>
+
+    <div class="row">
+        <% for (i=k; i<k+4; i++) { %>
+            <% if (videoFiles[i]) {el = videoFiles[i]; %>
+                <div class="col">
+                    <video style="max-height:50%;max-width:109%;height:200px;" controls src="<%= el %>" 
+                        type="video/mp4"> 
+                    </video>
+                    <p><%= ((decodeURI(el).slice(0,-4)).substr(0,28)) %> </p>
+                </div>
+            <% }%>
+        <%}%>
+    </div>
+<% } %>
+            </div>
+            <div class = "footer"> Footer</div>
+    </div>
+    
+</body>
+</html>
