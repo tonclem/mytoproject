@@ -5,11 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 //The below libraries are used for file collection
-var busboy = require('connect-busboy');
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var fileUpload = require('express-fileupload');
-var formidable = require('formidable');
+//var busboy = require('connect-busboy');
+//var bodyParser = require('body-parser');
+//var cors = require('cors');
+//var fileUpload = require('express-fileupload');
+//var formidable = require('formidable');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,9 +22,12 @@ var bashRouter = require('./routes/bash');
 var htmlRouter = require('./routes/html');
 var linuxRouter = require('./routes/linux');
 var nodejsRouter = require('./routes/nodejs');
-var searchedVids = require('./routes/searchedVideos');
-var allVideos = require('./routes/randomVideos');
-var uploadFiles = require('./routes/uploadFiles');
+var searchedVids = require('./routes/searchedvideos');
+var allVideos = require('./routes/randomvideos');
+var uploadFiles = require('./routes/uploadfiles');
+var user_reg = require('./routes/user_registration');
+var user_reg_mongo = require('./routes/user_registration_mongo');
+
 
 var app = express();
 
@@ -32,11 +35,15 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(bodyParser({defer:true}));
-app.use(bodyParser.json());
-app.use(fileUpload());
-app.use(cors());
-app.use(busboy());
+//app.use(bodyParser({defer:true}));
+//app.use(bodyParser.json());
+/*The reson we were not getting our file is cos we told our app to use file in 2 modules
+You should just use it in the module we want to colect our info
+
+*/
+//app.use(fileUpload());
+//app.use(cors());
+//app.use(busboy());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -58,9 +65,11 @@ app.use('/bash', bashRouter);
 app.use('/html', htmlRouter);
 app.use('/nodejs', nodejsRouter);
 app.use('/linux', linuxRouter);
-app.use('/searchedVideos', searchedVids);
-app.use('/randomVideos', allVideos);
-app.use('/uploadFiles', uploadFiles);
+app.use('/searchedvideos', searchedVids);
+app.use('/randomvideos', allVideos);
+app.use('/uploadfiles', uploadFiles);
+app.use('/user_registration', user_reg);
+app.use('/user_registration_mongo', user_reg_mongo);
 
 app.use('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'))

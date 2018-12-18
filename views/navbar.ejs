@@ -1,11 +1,11 @@
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm bg-green navbar-dark">
         
           
             <div id="mySidebar" class="sidebar">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-                <a class="nav-link" href="/uploadFiles">Upload Files</a>
-                <a class="nav-link" href="/randomVideos">Random Videos</a>
+                <a class="nav-link" href="/upload">Upload Files</a>
+                <a class="nav-link" href="/randomideos">Random Videos</a>
                 <a class="nav-link" href="/bash">Bash Programming</a>
                 <a class="nav-link" href="/html">HTML</a>
                 <a class="nav-link" href="/linux">Linux</a>
@@ -25,13 +25,24 @@
             </a>
 
 
-            <form class="form-inline mt-2 mt-md-0 ml-auto" method ="POST"action="/searchedVideos">
+            <form class="form-inline mt-2 mt-md-0 ml-auto" method ="POST"action="/searchedvideos">
               <input id="input_text" class="form-control mr-sm-2" type="text" name = "input_text" placeholder="Search" aria-label="Search">
               <input class="btn btn-outline-success my-2 my-sm-0" type ="submit" name = "btnSubmit" value = "Search"/>
               
             </form>
 
-            
+
+       
+            <a class="nav-link" href="/user_registration">Login</a>
+
+<form class="form-inline mt-2 mt-md-0 ml-auto" method ="post"action="/uploadfiles" enctype="multipart/form-data">
+  <input id="files_picker" class="form-control mr-sm-2" type="file" name = "filename" aria-label="Pick file">
+  <input class="btn btn-outline-success my-2 my-sm-0" type ="submit" name = "btnSubmit" value = "Upload"/>
+  
+</form>
+
+           
+
            <!--
             <form class="example ml-auto" action="torama.ng" style="margin:auto;max-width:300px">
               <input type="text" placeholder="Search.." name="search2">

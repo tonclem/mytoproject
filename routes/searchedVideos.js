@@ -17,7 +17,7 @@ searchSync = walk.searchSync('videos');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('searchView', { 
+  res.render('searchview', { 
     videoTitle: 'Searched Videos',
     videoFiles: searchSync,
     videoDir: 'All Videos'
@@ -57,7 +57,7 @@ router.post('/',(req,res) =>{
           //  +value.input_text + "</h3>" +"<button class='btn btn-outline-success my-2 my-sm-0' action='http://localhost:3000/randomVideos> Go back </button>"  );
         
 
-          res.render('notFoundView', { 
+          res.render('notfoundview', { 
             title: 'All Videos containing '+ value.input_text ,
             videoFiles: searchSync,
             videoDir: 'Video Search'
@@ -65,7 +65,7 @@ router.post('/',(req,res) =>{
           });
 
       }else{
-      res.render('searchView', { 
+      res.render('searchview', { 
         videoTitle: 'All Videos containing '+value.input_text ,
         videoFiles: foundVideos,
         videoDir: 'Video Search'

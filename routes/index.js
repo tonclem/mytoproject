@@ -3,6 +3,7 @@ var router = express.Router();
 //const walk = require('../walk.js');
 
 //var walkSync = walk.walkSync('videos');
+const walker = require('../sqlwalker');
 const allVideos = require('../randomFilePicker');
 var videosSync = [];
 

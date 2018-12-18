@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const allVideos = require('../randomFilePicker');
+const allVideos = require('../randomfilepicker');
 var videosSync = [];
 
 videosSync = allVideos.findVideos('videos');

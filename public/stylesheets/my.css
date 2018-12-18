@@ -12,6 +12,10 @@ body {
     border-radius: 10px;
   }
   
+  .jumbotron {
+    background-color: green;
+    color: white;
+  }
   .topnav {
     overflow: hidden;
     background-color: #008577;
