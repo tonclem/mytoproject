@@ -20,3 +20,10 @@ Updates
 2. Added a all videos category, user can now check all videos in the directories.
 3. Recommended video can be shown to user once page is opened to he/she.
 4. uploading of files to our directory
+
+
+Videos Used for MongoDb Database Management
+
+https://www.youtube.com/watch?v=Do_Hsb_Hs3c&t=24s
+Node JS MongoDB Tutorials by Derek Banas
+

@@ -10,6 +10,7 @@
     "connect-busboy": "0.0.2",
     "cookie-parser": "*",
     "cors": "^2.8.5",
+    "cryptr": "^4.0.2",
     "debug": "~2.6.9",
     "ejs": "2.5.7",
     "express": "~4.16.0",

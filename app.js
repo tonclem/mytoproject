@@ -26,6 +26,7 @@ var searchedVids = require('./routes/searchedvideos');
 var allVideos = require('./routes/randomvideos');
 var uploadFiles = require('./routes/uploadfiles');
 var user_reg = require('./routes/user_registration');
+var login = require('./routes/login');
 var user_reg_mongo = require('./routes/user_registration_mongo');
 
 
@@ -70,6 +71,7 @@ app.use('/randomvideos', allVideos);
 app.use('/uploadfiles', uploadFiles);
 app.use('/user_registration', user_reg);
 app.use('/user_registration_mongo', user_reg_mongo);
+app.use('/login', login);
 
 app.use('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'))

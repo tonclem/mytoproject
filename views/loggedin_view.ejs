@@ -1,0 +1,16 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+
+
+<div class="conntainer">
+
+    <% if(result.length) { %>
+    <h1 style="font:18px Arial;color: green">Welcome Back <%= userData.name %></h1>
+
+    <% } else{ %>
+        <h1 style="font:18px Arial;color: green"> <%= error %></h1>
+
+        <% } %>
+</div>
+
+<%- include('footer'); -%>

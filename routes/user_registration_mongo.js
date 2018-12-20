@@ -5,41 +5,47 @@ const fs = require('fs');
 const mongo = require('mongodb');
 
 
+// Encryption 
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotalySecretKey');
 
 
 
-
-
-//router.use(fileUpload());
+router.use(fileUpload());
 
 router.get('/', function (req, response, next) {
 
-    var MongoClient = mongo.MongoClient;
+    var MongoClient2 = mongo.MongoClient;
 
-    //After the Port number, is the name of the Database that our required table is located.
-    var url = "mongodb://localhost:27017/Toramadb";
+    var url2 = "mongodb://localhost:27017/Toramadb";
 
-    MongoClient.connect(url, (error,db)=>{
-        if(error) throw error;
-        console.log('Connection Established to Mongo');
+    MongoClient2.connect(url2, (err, db) => {
+        if (err) throw err;
+        
+        var dbo = db.db('Toramadb');
+        var collections = dbo.collection('torama_users');
 
-        var dbo = db.db("Toramadb");
-
-        var collections = dbo.collection('students');
-        collections.find({}).toArray((err,result)=>{
-            if(err) throw err;
-
-            else if(result.length){
-                response.render('mongo_table_views', {
-                    students: result
-                })
+        collections.find({name:"Tipapa Vala"}).toArray((reserr, res) => {
+            if (reserr) throw reserr;
+            else if (res.length) {
+                var password = cryptr.decrypt(res[0].password);
+                console.log(res);
+            }
+            else {
+                console.log("null");
+                //console.log(res);
             }
         });
+
         db.close();
     });
-    
-   
+
+    response.render('user_registration_mongo', {
+        regText: 'Register Now'
+    });
 });
+
+
 
 /*
 Listening for post request 
@@ -47,51 +53,73 @@ Listening for post request
 router.post('/', (req, res, next) => {
     var username = req.body.username;
     var phone = req.body.phone;
+    var email = req.body.email;
     var password = req.body.password;
-
+    console.log('mongo post');
 
     if (req.files) {
 
-        var profilepic = req.files.image, filename = profilepic.name;
+        var profilepic = req.files.file, filename = profilepic.name;
         console.log(username + ", " + password);
         var userImage = "user_images/" + filename;
 
-        // CREATE A TABLE AND START INSERTING OUR USERS
+        var MongoClient = mongo.MongoClient;
 
-        con.connect(function (err) {
-            if (err) throw err;
-            console.log("Connected!");
+        //After the Port number, is the name of the Database that our required table is located.
+        var url = "mongodb://localhost:27017/Toramadb";
 
-            // Create the table only if it does not exists on the database
-            var sql = "CREATE TABLE IF NOT EXISTS Torama_Users (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(id),name TEXT NOT NULL, phone TEXT NOT NULL, password TEXT NOT NULL,image TEXT NOT NULL)";
-            con.query(sql, function (err, result) {
-                if (err) throw err;
-                console.log("Table created");
+        MongoClient.connect(url, (error, db) => {
+            if (error) throw error;
+            console.log('Connection Established to Mongo');
+
+            var dbo = db.db("Toramadb");
+
+            //First check if the collection already exists before creating it
+            dbo.listCollections({ name: 'torama_users' }).next((error, collInfo) => {
+
+                if (error) throw error;
+
+                else if (collInfo) {
+                    console.log('Collection exists');
+
+                    const encryptedPword = cryptr.encrypt(password);
+                    var obj = { name: username, email: email, password: encryptedPword, phone: phone, image: userImage };
+                    dbo.collection('torama_users').insertOne(obj, (inserterr, result) => {
+                        if (inserterr) throw inserterr;
+                        console.log('user inserted ' + result);
+
+                        res.render('signedup_view', {
+                            username: username,
+                            password: password,
+                        })
+                    });
+                } else {
+
+                   dbo.createCollection('torama_users', (err, result)=>{
+                   })
+                       
+                }
+                db.close();
             });
 
-            // Insert user info to our table
-            var sql2 = "INSERT INTO Torama_Users SET ?";
-            var post = { name: username, phone: phone, password: password, image: userImage };
-            con.query(sql2, post, function (err, result) {
-                if (err) throw err;
-                console.log("1 record inserted");
+            // var obj = { student: username, street: email, city: password, state: phone, sex: userImage,gpa:"4.6" };
+            // dbo.collection('students').insertOne(obj, (inserterr, result) => {
+            //     if (inserterr) throw inserterr;
+            //     console.log('user inserted ' + result);
 
-                // Insert users profile pics to user_images folder
-                profilepic.mv(userImage, (error)=>{
-                        if(error) throw error;
-                });
+            //     res.render('signedup_view', {
+            //         username: username,
+            //         password: password,
+            //     })
+            // });
 
-                // Render user pasword to user, for login purpose
-                res.render('signedup_view', {
-                    username: username,
-                    password: password,
-                })
-            });
+           
         });
+    }else{
+        console.log('not file');
     }
 
 });
-
 
 
 
